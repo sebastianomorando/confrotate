@@ -61,7 +61,7 @@
   //Init of the parent container
   var el =  $(this);
   el.css("position","relative");
-  el.css("cursor","grab");
+  el.addClass("grab");
   el.css("height", settings.height+"px");
   el.css("width", settings.width+"px");
   //Append a div for every layer
@@ -110,18 +110,18 @@
   self.startX = 0;
   self.tick = 0;
   self.before = new Date().getTime();                         
-  $(document).bind('mousedown', function (e) {
+  $(document).bind('mousedown touchstart', function (e) {
     self.dragging = true;
     self.startX = self.endX;
-    $(document).css("pointer","grabbing");
+    el.addClass("grabbing");
   });
-  $(document).bind('mouseup', function (e) {
+  $(document).bind('mouseup touchend', function (e) {
     self.dragging = false;
-    $(document).css("pointer","auto");
+    el.removeClass("grabbing");
   });
-  $(document).bind('mousemove', function (e) {
+  $(document).bind('mousemove touchmove', function (e) {
     e.preventDefault();
-     self.endX = e.pageX;
+     self.endX = e.pageX || e.touches[0].pageX;
     if (self.dragging){
       if (self.before < new Date().getTime() - 40) {
          var deltaX = self.endX - self.startX;
