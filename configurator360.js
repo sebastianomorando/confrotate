@@ -86,6 +86,9 @@
     html+="<td><b>"+value.name+"</b></td>";
     $.each(value.configurations, function(i, conf){
       html+="<td><button class='set_conf' data-layer='"+index+"' data-conf='"+i+"' >"+conf.name+"</button></td>";;
+      //preload images
+      var img=new Image();
+      img.src=conf.url;
     });
     html+="</tr>";
    });
@@ -113,10 +116,12 @@
   $(document).bind('mousedown touchstart', function (e) {
     self.dragging = true;
     self.startX = self.endX;
+    el.removeClass("grab");
     el.addClass("grabbing");
   });
   $(document).bind('mouseup touchend', function (e) {
     self.dragging = false;
+    el.addClass("grab");
     el.removeClass("grabbing");
   });
   $(document).bind('mousemove touchmove', function (e) {
