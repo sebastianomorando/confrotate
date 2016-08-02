@@ -6,6 +6,7 @@
   
   var settings = $.extend({
     frames : 8, // Numero di posizioni ( 8-16-24)
+    sensibility : 35, //number of pixel you have to drag to change frame
     height : 700, //altezza del frame
     width : 700, //larghezza del frame
     spritesheetWidth: 2800,
@@ -130,10 +131,10 @@
     if (self.dragging){
       if (self.before < new Date().getTime() - 40) {
          var deltaX = self.endX - self.startX;
-          if (deltaX > 10) {
+          if (deltaX > settings.sensibility) {
             self.right();
             self.startX = self.endX;
-          } else if (deltaX < -10) {
+          } else if (deltaX < -1*settings.sensibility) {
             self.left();
             self.startX = self.endX;
           }
