@@ -114,7 +114,7 @@
   self.startX = 0;
   self.tick = 0;
   self.before = new Date().getTime();                         
-  $(document).bind('mousedown touchstart', function (e) {
+  $(el).bind('mousedown touchstart', function (e) {
     self.dragging = true;
     self.startX = self.endX;
     el.removeClass("grab");
@@ -125,7 +125,7 @@
     el.addClass("grab");
     el.removeClass("grabbing");
   });
-  $(document).bind('mousemove touchmove', function (e) {
+  $(el).bind('mousemove touchmove', function (e) {
     e.preventDefault();
      self.endX = e.pageX || e.touches[0].pageX;
     if (self.dragging){
