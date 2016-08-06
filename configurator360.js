@@ -56,6 +56,7 @@
   self.render = function () {
     $.each(settings.layers, function(index, value) {
       $("#"+value.name).css("background-position", "-"+self.actualX+"px "+self.actualY+"px");
+      $("#"+value.name+"_hidden").css("background-position", "-"+self.actualX+"px "+self.actualY+"px");
     });  
   }
 
@@ -68,12 +69,13 @@
   //Append a div for every layer
   $.each(settings.layers, function(index, value) {
     $(el).append("<div class='layer' id='"+value.name+"'></div>");
+    $(el).append("<div class='layer hidden' id='"+value.name+"_hidden'></div>");
     //set correct height and width
     $("#"+value.name).css("height", settings.height+"px");
     $("#"+value.name).css("width", settings.width+"px");
-    $("#"+value.name).css("position", "absolute");
-    $("#"+value.name).css("top", "0");
-    $("#"+value.name).css("left", "0");
+    $("#"+value.name+"_hidden").css("height", settings.height+"px");
+    $("#"+value.name+"_hidden").css("width", settings.width+"px");
+    
     //Set the spritesheet of the first configuration as background-image
     $("#"+value.name).css("background-image","url("+value.configurations[0].url+")");
   });
@@ -101,7 +103,13 @@
     $(this).addClass("selected");
     var layer = $(this).data("layer");
     var conf = $(this).data("conf");
-    $("#"+settings.layers[layer].name).css("background-image","url("+settings.layers[layer].configurations[conf].url+")");
+    var layer_name = settings.layers[layer].name;
+    var url = settings.layers[layer].configurations[conf].url;
+    $("#"+layer_name+"_hidden").css("background-image","url("+url+")");
+    $("#"+layer_name+"_hidden").fadeIn( "slow", function() {
+      $("#"+layer_name+"_hidden").hide();
+      $("#"+layer_name).css("background-image","url("+url+")");
+    });
    });
 
  
