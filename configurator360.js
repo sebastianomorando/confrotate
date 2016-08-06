@@ -11,6 +11,7 @@
     width : 700, //larghezza del frame
     spritesheetWidth: 2800,
     spritesheetHeight: 1400,
+    transitionDuration: 400,
     layers : [
       { 
         name: 'layer',
@@ -75,7 +76,6 @@
     $("#"+value.name).css("width", settings.width+"px");
     $("#"+value.name+"_hidden").css("height", settings.height+"px");
     $("#"+value.name+"_hidden").css("width", settings.width+"px");
-    
     //Set the spritesheet of the first configuration as background-image
     $("#"+value.name).css("background-image","url("+value.configurations[0].url+")");
   });
@@ -83,19 +83,19 @@
   /*
    * Adding configurator button
    */
-   var html = "<table>";
+   var html = "<div class='conf_options'>";
    $.each(settings.layers, function(index, value) {
-    html+="<tr>";
-    html+="<td><b>"+value.name+"</b></td>";
+    //html+="<tr>";
+    html+="<span><b>"+value.name+"</b></span>";
     $.each(value.configurations, function(i, conf){
-      html+="<td><button class='set_conf' data-layer='"+index+"' data-conf='"+i+"' >"+conf.name+"</button></td>";;
+      html+="<button class='set_conf' data-layer='"+index+"' data-conf='"+i+"' >"+conf.name+"</button>";
       //preload images
       var img=new Image();
       img.src=conf.url;
     });
-    html+="</tr>";
+    html+="<br>";
    });
-   html+="</table>";
+   html+="</div>";
    $(el).after(html);
 
    $(".set_conf").click(function() {
@@ -106,7 +106,7 @@
     var layer_name = settings.layers[layer].name;
     var url = settings.layers[layer].configurations[conf].url;
     $("#"+layer_name+"_hidden").css("background-image","url("+url+")");
-    $("#"+layer_name+"_hidden").fadeIn( "slow", function() {
+    $("#"+layer_name+"_hidden").fadeIn( settings.transitionDuration, function() {
       $("#"+layer_name+"_hidden").hide();
       $("#"+layer_name).css("background-image","url("+url+")");
     });
@@ -128,7 +128,7 @@
     el.removeClass("grab");
     el.addClass("grabbing");
   });
-  $(document).bind('mouseup touchend', function (e) {
+  $(el).bind('mouseup mouseleave touchend', function (e) {
     self.dragging = false;
     el.addClass("grab");
     el.removeClass("grabbing");

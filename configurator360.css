@@ -4,6 +4,22 @@
    left: 0";
 }
 
+.hidden {
+    display:none;
+}
+
+.conf_options {
+    position:absolute;
+    top: 0;
+}
+
+.conf_options button {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding:10px;
+    font-size: 16px;
+}
+
 .grab {
     cursor: move;
     cursor: -webkit-grab;
