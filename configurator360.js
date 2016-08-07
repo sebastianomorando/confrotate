@@ -84,7 +84,6 @@
    */
    var html = "<div class='conf_options'>";
    $.each(settings.layers, function(index, value) {
-    //html+="<tr>";
     html+="<span><b>"+value.name+"</b></span>";
     $.each(value.configurations, function(i, conf){
       html+="<button class='set_conf' data-layer='"+index+"' data-conf='"+i+"' >"+conf.name+"</button>";
@@ -105,16 +104,9 @@
     var layer_name = settings.layers[layer].name;
     var url = settings.layers[layer].configurations[conf].url;
     $("#"+layer_name+"_hidden").css("background-image","url("+url+")");
-    //$("#"+layer_name+"_hidden").css("display","block");
     $(this).css("transition", settings.transitionTime);
     $("#"+layer_name+"_hidden").css("opacity","1");
     $(".conf_options button").prop("disabled",true);
-//     $("#"+layer_name+"_hidden").on("transitionend", function() {
-//      console.log("TRANSITIONEND");
-//      $("#"+layer_name+"_hidden").css("opacity","0");
-//      $("#"+layer_name+"_hidden").css("display","none");
-//      $("#"+layer_name).css("background-image","url("+url+")");
-//     });
    });
 
    $(".hidden").on("transitionend", function() {

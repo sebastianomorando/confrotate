@@ -25,6 +25,10 @@
     font-size: 16px;
 }
 
+.conf_options button.selected {
+    border: 2px solid red;
+}
+
 .grab {
     cursor: move;
     cursor: -webkit-grab;
