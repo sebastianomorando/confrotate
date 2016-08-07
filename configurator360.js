@@ -5,13 +5,12 @@
   var self = this;
   
   var settings = $.extend({
-    frames : 8, // Numero di posizioni ( 8-16-24)
     sensibility : 35, //number of pixel you have to drag to change frame
     height : 700, //altezza del frame
     width : 700, //larghezza del frame
     spritesheetWidth: 2800,
     spritesheetHeight: 1400,
-    transitionDuration: 400,
+    transitionTime: $(".hidden").css("transition"),
     layers : [
       { 
         name: 'layer',
@@ -106,11 +105,28 @@
     var layer_name = settings.layers[layer].name;
     var url = settings.layers[layer].configurations[conf].url;
     $("#"+layer_name+"_hidden").css("background-image","url("+url+")");
-    $("#"+layer_name+"_hidden").fadeIn( settings.transitionDuration, function() {
-      $("#"+layer_name+"_hidden").hide();
-      $("#"+layer_name).css("background-image","url("+url+")");
-    });
+    //$("#"+layer_name+"_hidden").css("display","block");
+    $(this).css("transition", settings.transitionTime);
+    $("#"+layer_name+"_hidden").css("opacity","1");
+    $(".conf_options button").prop("disabled",true);
+//     $("#"+layer_name+"_hidden").on("transitionend", function() {
+//      console.log("TRANSITIONEND");
+//      $("#"+layer_name+"_hidden").css("opacity","0");
+//      $("#"+layer_name+"_hidden").css("display","none");
+//      $("#"+layer_name).css("background-image","url("+url+")");
+//     });
    });
+
+   $(".hidden").on("transitionend", function() {
+      $(".conf_options button").prop("disabled",false);
+      $(this).addClass("reset_transition");
+      $(this).css("opacity","0");
+      $(this).removeClass("reset_transition");
+      var layer_name = $(this).attr("id");
+      var url = $(this).css("background-image");
+      layer_name = layer_name.substring(0, layer_name.length - 7);
+      $("#"+layer_name).css("background-image",url);
+    });
 
  
   /*
