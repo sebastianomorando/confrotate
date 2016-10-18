@@ -84,14 +84,16 @@
    */
    var html = "<div class='conf_options'>";
    $.each(settings.layers, function(index, value) {
-    html+="<span><b>"+value.name+"</b></span>";
-    $.each(value.configurations, function(i, conf){
-      html+="<button class='set_conf' data-layer='"+index+"' data-conf='"+i+"' >"+conf.name+"</button>";
-      //preload images
-      var img=new Image();
-      img.src=conf.url;
-    });
-    html+="<br>";
+   if (!value.hideControls) {
+        html+="<span><b>"+value.name+"</b></span>";
+        $.each(value.configurations, function(i, conf){
+          html+="<button class='set_conf' data-layer='"+index+"' data-conf='"+i+"' >"+conf.name+"</button>";
+          //preload images
+          var img=new Image();
+          img.src=conf.url;
+        });
+        html+="<br>";
+     }
    });
    html+="</div>";
    $(el).after(html);
